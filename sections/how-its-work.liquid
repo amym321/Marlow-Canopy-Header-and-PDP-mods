@@ -1,0 +1,261 @@
+ <section class="how-its-work">
+    <div class="container">
+        {% if section.settings.main-heading != blank %}
+        <h1>{{ section.settings.main-heading }}</h1>
+        {% endif %}
+        {% if section.settings.main-heading != blank %}
+        <p> {{ section.settings.sub-heading }}</p>
+        {% endif %}
+
+        <div class="card-container">
+            <!-- Cards -->
+            {% for block in section.blocks %}
+            <div class="card {{ block.settings.add-class }}">
+                <div class="card-heading">
+                    <div class="sr-img">
+                        {% if block.settings.sr-img != blank %}
+                        <img src="{{ block.settings.sr-img | img_url:'master'}}" alt="sr-01">
+                        {% endif %}
+                    </div>
+                    <div class="content">
+                        {% if block.settings.card-heading != blank %}
+                        <h2>{{ block.settings.card-heading }}</h2>
+                        {% endif %}
+                        <div>
+                            {% if block.settings.border-img != blank %}
+                            <img src="{{ block.settings.border-img | img_url:'master'}}">
+                            {% endif %}
+                        </div>
+                        {% if block.settings.border-img != blank %}
+                        <p class="card-description">
+                            {{ block.settings.card-description }}
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+    
+
+{% style %}
+
+
+.how-its-work h1 {
+      font-family: 'Space Mono';
+    color: #302BA3;
+    font-size: 30px;
+    line-height: 32.55px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.how-its-work .container {
+    padding: 30px 15px;
+}
+
+.how-its-work h1+p {
+    color: #302BA3;
+    font-size: 16px;
+    line-height: 25.6px;
+    font-weight: 400;
+    text-align: center;
+      margin-top: 25px;
+    margin-bottom: 32px;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+ @media(min-width:768px) {
+    .card-container {
+      flex-direction: row;
+      
+    }
+    #shopify-section-{{ section.id }} .how-its-work {
+     display: {{ section.settings.desktop_show_hide }}
+   }
+   .card-container .card {
+     width: 33%;
+   }
+}
+  @media(max-width:767px){
+    #shopify-section-{{ section.id }} .how-its-work {
+     display: {{ section.settings.mobile_show_hide }}
+   }
+  }
+.card-container .card {
+    background-size: cover !important;
+    padding: 25px;
+    padding-top: 35px;
+    background-position: center center !important;
+    border-radius: 65px;
+}
+
+  
+.card-container .card-1 {
+    background: url('https://cdn.shopify.com/s/files/1/0384/8254/2731/files/Group_11_430x.png?v=1687851757');
+}
+
+.card-container .card-2 {
+    background: url('https://cdn.shopify.com/s/files/1/0384/8254/2731/files/Group_8_1_430x.png?v=1687851756');
+}
+
+.card-container .card-3 {
+    background: url('https://cdn.shopify.com/s/files/1/0384/8254/2731/files/Group_9_430x.png?v=1687851757');
+}
+
+.card-container .card-2 .card-heading,
+.card-container .card-3 .card-heading {
+    flex-direction: column;
+}
+.how-its-work .card-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    min-height: 298px;
+  
+}
+
+.how-its-work .card-heading .sr-img {
+    max-width: 65px;
+}
+
+.how-its-work .content>div {
+    max-width: 162px;
+}
+
+.how-its-work .card-heading>div img,
+.how-its-work .content>div img {
+    width: 100%;
+}
+
+.how-its-work .card-heading h2 {
+    color: #302BA3;
+    font-size: 30px;
+    line-height: 31.47px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.how-its-work .card-2 .card-heading h2,
+.how-its-work .card-2 .card-description {
+    color: #FFFFFF;
+}
+
+.card-description {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 25.6px;
+    color: #302BA3;
+}
+.how-its-work .card-heading .content {
+    max-width: 196px !important;
+}
+
+.card-container .card-2 .content,
+.card-container .card-3 .content {
+    max-width: 170px;
+}
+{% endstyle %}
+
+{% javascript %}
+{% endjavascript %}
+{% schema %}
+  {
+    "name": "How it works",
+    "settings": [
+      
+           {
+             "type": "text",
+             "id": "main-heading",
+              "label": "Main Heading"
+           },
+      {
+         "type": "text",
+         "id": "sub-heading",
+         "label": "Sub Heading"
+       },
+         {
+      "type": "select",
+      "id": "desktop_show_hide",
+      "label": "Show and Hide On Desktop",
+      "default": "flex",
+      "options":
+      [
+        {
+          "value": "flex",
+          "label": "Show"
+        },
+        {
+          "value": "None",
+          "label": "Hide"
+        }
+      ]
+         },
+       {
+      "type": "select",
+      "id": "mobile_show_hide",
+      "label": "Show and Hide On Mobile",
+      "default": "flex",
+      "options":
+      [
+        {
+          "value": "flex",
+          "label": "Show"
+        },
+        {
+          "value": "None",
+          "label": "Hide"
+        }
+      ]
+         }
+    ],
+    
+    "blocks":[
+       {
+         "name": "Card block",
+         "type": "section",
+         "settings":[
+            {
+             "type": "text",
+             "id": "add-class",
+              "label": "Add Custom Class"
+           },
+           {
+             "type": "image_picker",
+             "id": "sr-img",
+             "label": "serial Number Image"
+           },
+           {
+             "type": "text",
+             "id": "card-heading",
+              "label": "Card Heading"
+           },
+            {
+             "type": "image_picker",
+             "id": "border-img",
+             "label": "Border Image"
+           },
+           {
+             "type": "text",
+             "id": "card-description",
+             "label": "Card Description"
+           }
+         ]
+       }
+    ],
+    
+    "presets": [
+    {
+     "name": "How it works"
+    }
+   ]
+  }
+{% endschema %}
