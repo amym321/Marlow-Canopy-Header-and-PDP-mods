@@ -12121,59 +12121,21 @@ body.tab-used .cc-checkbox__input:focus + .cc-checkbox__label, html.no-js .cc-ch
   -ms-transition: all .25s ease;
 }
 
-/* .transparent-header .section-slideshow .header-transparent, */
-.transparent-header .section-slideshow:has(.header-transparent) {
+.template-index.transparent-header #content {
   top: -75px;  /* top: -140px; */
   position: relative;
-
 }
 .transparent-header .section-slideshow .header-transparent {
   margin-bottom:0px !important;
   padding-bottom:0px !important;
 }
 
-/* @media (max-width: 805px) {
-  .transparent-header .section-slideshow .header-transparent	{
-    top: -120px;
-    position: relative;
-  }
-} */
 @media (max-width: 768px) {
-  /* .transparent-header .section-slideshow .header-transparent, */
-.transparent-header .section-slideshow:has(.header-transparent) {
+    .template-index.transparent-header #content {
     top: -60px;    /* top: -70px; */
     position: relative;
   }
 }
-/* @media (max-width: 768px) {
-  .transparent-header .section-slideshow .header-transparent  {
-    top: -55px;
-    position: relative;
-  }
-} */
-.transparent-header .section-slideshow .header-transparent  .inner	{
-  /* transform: translatey(150px) !important; */
-  transform: translatey(100px) !important;
-}
-@media (max-width: 805px) {
-  .transparent-header .section-slideshow .header-transparent  .inner	{
-    transform: translatey(130px) !important;
-  }
-}
-@media (max-width: 768px) {
-  .transparent-header .section-slideshow .header-transparent .inner	{
-    transform: translatey(55px) !important;
-  }
-}
-
-/* desktop menu at top left */
-/* .main-nav.align-center, */
-/* .nav_menu-true {
-  width: 100%;
-  justify-content: flex-start !important;
-  position: relative;
-  top: -65px;
-} */
 
 .not-scrolled .nav_menu-true .sub-nav {
   border: none;
@@ -12191,4 +12153,23 @@ body.tab-used .cc-checkbox__input:focus + .cc-checkbox__label, html.no-js .cc-ch
 }
 .not-scrolled:hover .main-nav .sub-nav .sub-nav-item-link {
   color: {{ nav_featured_col }} !important;
+}
+
+
+/* sticky pdp image on desktop */
+@media (min-width:769px) {
+  .product-container .row {
+    display: flex;
+  }
+  .new-media-wrapper {
+    overflow: auto;
+    position: sticky;
+    top: 80px;
+    width:90%;
+  }
+}
+
+
+.product-details .product-title {
+  font-weight: 700;
 }
