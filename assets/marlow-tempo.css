@@ -1,0 +1,216 @@
+html body.bundle-marlow .data-smartrr-top-price {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  padding-bottom: 0;
+}
+html body.bundle-marlow .data-smartrr-top-price afterpay-placement {
+  order: 1;
+  width: 100%;
+  display: block;
+}
+html body.bundle-marlow .product-details .cc-rating-container .cc-rating-custom-caption {
+  left: 6px;
+  line-height: 1;
+  top: 3px;
+}
+
+html body.bundle-marlow .product-details .cc-rating-container .cc-rating-stars--inactive svg {
+  width: 25px;
+  height: 25px;
+}
+
+html body.bundle-marlow .product-details .font-up {
+  font-family: Avenir Next;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #302ba3;
+}
+
+html body.bundle-marlow .choose-wrapper {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+html body.bundle-marlow .scroll-link {
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: Avenir Next;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+html body.bundle-marlow .radio-wrapper {
+  border: 2px solid #302ba3;
+  box-shadow: 2px 2px 6px 0px #302ba340;
+  background-color: #fffaf6;
+  max-width:400px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+html body.bundle-marlow .radio-wrapper .smartrr-purchase-options {
+  margin-right: 0;
+  margin-bottom: 0;
+}
+html body.bundle-marlow .smartrr-otp.smartrr-grp-input{
+  border-bottom:1px solid #978FC7;
+
+}
+
+html body.bundle-marlow div[data-smartrr-onetime-benefits],
+html body.bundle-marlow div[data-smartrr-subscription-benefits]{
+  padding-bottom:16px;
+  padding-top:8px;
+}
+
+html body.bundle-marlow .varient-wrapper.data-smartrr-label-sub,
+html body.bundle-marlow .description-wrapper 
+{
+  max-width:400px;
+}
+html body.bundle-marlow .varient-inner {
+  display: flex;
+  margin-bottom: 16px;
+  justify-content:space-between;
+}
+
+html body.bundle-marlow .varient {
+cursor:pointer;
+}
+html body.bundle-marlow .active-img{
+  display:none; 
+}
+
+html body.bundle-marlow .varient.active .active-img {
+display:block;
+}
+html body.bundle-marlow .varient.active .img {
+display:none;
+}
+html body.bundle-marlow .smartrr-purchase-options .smartrr-selling-plan-group-input-display:before {
+  border: 2px solid #302ba3;
+}
+
+html body.bundle-marlow .smartrr-purchase-options .smartrr-selling-plan-group-input-display:after {
+  background: #302ba3;
+}
+
+html body.bundle-marlow .smartrr-purchase-options div[data-smartrr-selling-plan-groups] > div {
+  padding:15px 16px;
+}
+
+html body.bundle-marlow .radio-wrapper .color-active {
+  background-color: #fdf3eb;
+}
+
+html body.bundle-marlow .bm-description-wrapper .varient-description,
+html body.bundle-marlow .bm-description-wrapper.otp .description {
+  margin: 24px 0 6px;
+}
+
+html body.bundle-marlow .bm-description-wrapper .varient-description p,
+html body.bundle-marlow .bm-description-wrapper.otp .description p {
+  font-family: Avenir Next;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+html body.bundle-marlow .product-details > .product-detail__gap-sm.rte.product-area__rte:nth-child(3),
+html body.bundle-marlow .variant-select {
+  display: none;
+}
+
+html body.bundle-marlow .product-details > .product-detail__gap-sm.rte.product-area__rte {
+  padding: 0 !important;
+}
+
+html body.bundle-marlow div[data-smartrr-benefits-all] {
+  padding: 8px 0;
+  display: flex;
+  font-family: Avenir Next;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+html body.bundle-marlow .bm-description-wrapper p span {
+  text-transform: lowercase;
+}
+
+
+
+html body.bundle-marlow div[data-smartrr-benefits-all]:before {
+  content:'';
+  color: #00b48a;
+  min-width: 30px; 
+  background-repeat:no-repeat;
+  font-weight: 900;
+  display: inline-block;
+  color: #00b48a;
+  background-image:url(https://cdn.shopify.com/s/files/1/0384/8254/2731/files/g-check_1_1080x@2x.png?v=1692175550);
+}
+
+html body.bundle-marlow .purchase-radio {
+  font-family: Avenir Next;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+html body.bundle-marlow .purchase-radio span {
+  font-family: Avenir Next;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #00b48a;
+}
+
+
+@media screen and (min-width: 768px) {
+
+  /* control radio button section  none */  
+  html body.bundle-marlow .description-wrapper+.data-smartrr-top-price {
+        display:none;
+    }
+}
+@media screen and (max-width: 768px) {
+  html body.bundle-marlow .radio-wrapper div[data-smartrr-onetime-benefits],
+  html body.bundle-marlow .radio-wrapper div[data-smartrr-subscription-benefits]
+{
+  padding-left:0;
+}
+}
+
+
+
+html body.marlow-tampons .data-smartrr-top-price{
+  flex-direction:column;
+}
+
+  html body.bundle-marlow .data-smartrr-top-price> span{
+    order:-1;
+}
+
+
+
+
+

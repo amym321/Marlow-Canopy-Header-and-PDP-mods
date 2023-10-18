@@ -1,3 +1,7 @@
+{{ 'marlow-tempo.css' | asset_url | stylesheet_tag }}
+
+
+
 {%- assign is_featured_product = false -%}
 
 {%- liquid
@@ -213,11 +217,16 @@
 
             {%- when 'variant_picker' -%}
             <!--   added dropdown based on radio buttons - am -->
-              {% for option in product.options_with_values %}
-                {% if option.name != blank and  option.name != "Title" %}
-                  <div>{{ option.name }}</div>
-                {% endif %}
-              {% endfor  %}
+                             {% for option in product.options_with_values %}
+                  {% if option.name != blank and option.name != 'Title' %}
+                    <div class="choose-wrapper">
+                      <div class="font-up">{{ option.name }}</div>
+                      {% if section.settings.choose_link != blank %}
+                        <div class="scroll-link">{{ section.settings.choose_link }}</div>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
               <div dropdown-multi-variants class="variant-select">
                 <div class="dropdown-options dropdown-field">
                   <div onclick="dropdownMenu()" class="drop-button">
@@ -236,6 +245,7 @@
                           {% endif %}
                         {% endfor %} 
                       </div>
+                    
                       <div data-smartrr-label-otp>
                         {% for variant in product.variants %}
                           {% unless variant.title contains "Subscription" %}
@@ -285,56 +295,207 @@
                 </div>
               </div>
 
-              {% if product.available and block.settings.stock_warning_show %}
-                {%- if current_variant.inventory_management == 'shopify' and current_variant.inventory_quantity > 0 -%}
-                  {% if block.settings.stock_warning_limit == 0 or variant.inventory_quantity <= block.settings.stock_warning_limit %}
-                    <div class="product-inventory-notice product-detail__gap-sm">
-                      {{- 'products.labels.only_x_left' | t: quantity: current_variant.inventory_quantity -}}
+                     {% if product == all_products['bundle-save'] or product == all_products['marlow-tampons'] %}
+                  <div class="varient-wrapper data-smartrr-label-sub">
+                    <div class="varient-inner">
+                      {% if section.settings.Light != blank -%}
+                        <div class="varient Light" data-id="0">
+                          <img src="{{ section.settings.Light | image_url }}" alt="" class="img">
+                          <img src="{{ section.settings.Light_active | image_url }}" alt="" class="active-img">
+                        </div>
+                      {% endif -%}
+
+                      {% if section.settings.Regular != blank -%}
+                        <div class="varient Regular" data-id="1">
+                          <img src="{{ section.settings.Regular | image_url }}" alt="" class="img">
+                          <img src="{{ section.settings.Regular_active | image_url }}" alt="" class="active-img">
+                        </div>
+                      {% endif -%}
+
+                      {% if section.settings.Super != blank -%}
+                        <div class="varient Super" data-id="2">
+                          <img src="{{ section.settings.Super | image_url }}" alt="" class="img">
+                          <img src="{{ section.settings.Super_active | image_url }}" alt="" class="active-img">
+                        </div>
+                      {% endif -%}
+                      {% if section.settings.Combo != blank -%}
+                        <div class="varient Combo" data-id="3">
+                          <img src="{{ section.settings.Combo | image_url }}" alt="" class="img">
+                          <img src="{{ section.settings.Combo_active | image_url }}" alt="" class="active-img">
+                        </div>
+                      {% endif -%}
                     </div>
-                  {%- else -%}
-                    <div class="product-inventory-notice product-inventory-notice--no-inventory product-detail__gap-sm"></div>
-                  {%- endif -%}
-                {%- else -%}
-                  <div class="product-inventory-notice product-inventory-notice--no-inventory product-detail__gap-sm"></div>
-                {%- endif -%}
-              {% endif %}
-
-            <!-- code added - am. Benefits text depending on One-Time Purchase or Subscription checked -->
-            {% for tag in product.tags %}
-              {% if tag == 'benefits' %}
-                {% assign has_benefits = true %}
-              {% endif %}
-            {% endfor %}
-
-            {% render 'smartrr-product' %}
-
-            {% if has_benefits %}
-              <div data-smartrr-choose-otp-benefit class="hide">
-                <div data-smartrr-onetime-benefits>
-                  {% if product == all_products["bundle-save"] %}
-                  <div>1 box of tampons, 1 bottle of lubricant</div>
+                  </div>
+                {% endif %}
+                <div class="radio-wrapper">
+                  {% if product.available and block.settings.stock_warning_show %}
+                    {%- if current_variant.inventory_management == 'shopify'
+                      and current_variant.inventory_quantity > 0
+                    -%}
+                      {% if block.settings.stock_warning_limit == 0
+                        or variant.inventory_quantity <= block.settings.stock_warning_limit
+                      %}
+                        <div class="product-inventory-notice product-detail__gap-sm">
+                          {{- 'products.labels.only_x_left' | t: quantity: current_variant.inventory_quantity -}}
+                        </div>
+                      {%- else -%}
+                        <div
+                          class="product-inventory-notice product-inventory-notice--no-inventory product-detail__gap-sm"
+                        ></div>
+                      {%- endif -%}
+                    {%- else -%}
+                      <div
+                        class="product-inventory-notice product-inventory-notice--no-inventory product-detail__gap-sm"
+                      ></div>
+                    {%- endif -%}
                   {% endif %}
-                  {% if product == all_products["marlow-tampons"] %}
-                  <div>1 box of tampons</div>
+                
+                  <!-- code added - am. Benefits text depending on One-Time Purchase or Subscription checked -->
+                  {% for tag in product.tags %}
+                    {% if tag == 'benefits' %}
+                      {% assign has_benefits = true %}
+                    {% endif %}
+                  {% endfor %}
+
+                  {% render 'smartrr-product' %}
+
+                  {% if has_benefits %}
+                    <div data-smartrr-choose-otp-benefit class="hide">
+                      <div data-smartrr-onetime-benefits>
+                        <!--
+                          {% if product == all_products['bundle-save'] %}
+                            <div>1 box of tampons, 1 bottle of lubricant</div>
+                          {% endif %}
+                          {% if product == all_products['marlow-tampons'] %}
+                            <div>1 box of tampons</div>
+                          {% endif %}
+                        -->
+                        {% if product == all_products['bundle-save'] or product == all_products['marlow-tampons'] %}
+                          <div data-smartrr-benefits-all data-smartrr-benefits-duration>Delivered every 90 days</div>
+                          <div data-smartrr-benefits-all>Skip or cancel anytime</div>
+                          <div data-smartrr-benefits-all>Free shipping from orders over $50</div>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                    <div data-smartrr-choose-sub-benefit class="hide">
+                      <div data-smartrr-subscription-benefits>
+                        {% if product == all_products['bundle-save'] %}
+                          <!-- <div>3 boxes of tampons, 3 bottles of lubricant</div> -->
+                        {% endif %}
+                        {% if product == all_products['marlow-tampons'] %}
+                          <!-- <div>3 boxes of tampons</div> -->
+                        {% endif %}
+                        <div data-smartrr-benefits-all data-smartrr-benefits-duration></div>
+                        <div data-smartrr-benefits-all>Skip or cancel anytime</div>
+                        <div data-smartrr-benefits-all>Free shipping from orders over $50</div>
+                      </div>
+                    </div>
+                    {% assign has_benefits = false %}
                   {% endif %}
-                  <div data-smartrr-benefits-onetime>Auto-refill deliveries</div>
                 </div>
-              </div>
-              <div data-smartrr-choose-sub-benefit class="hide">
-                <div data-smartrr-subscription-benefits>
-                  {% if product == all_products["bundle-save"] %}
-                  <div>3 boxes of tampons, 3 bottles of lubricant</div>
-                  {% endif %}
-                  {% if product == all_products["marlow-tampons"] %}
-                  <div>3 boxes of tampons</div>
-                  {% endif %}
-                  <div data-smartrr-benefits-all data-smartrr-benefits-duration></div>
-                  <div data-smartrr-benefits-all>Skip or cancel anytime</div>
-                  <div data-smartrr-benefits-all>Free Shipping</div>
-                </div>
-              </div>
-              {% assign has_benefits = false %}
-            {% endif %}
+
+                
+                {% if product == all_products['bundle-save'] %}
+                  <div class="description-wrapper bm-description-wrapper sub">
+                    <!-- subscription + non-combo -->
+                    <div class="varient-description  Light hide " data-id="0">
+                      {% if section.settings.Light_subscription_bundle != blank %}
+                        <p>{{ section.settings.Light_subscription_bundle }}</p>
+                      {% endif -%}
+                    </div>
+                    <!-- subscription + non-combo -->
+                    <div class="varient-description Regular hide" data-id="1">
+                      {% if section.settings.Regular_subscription_bundle != blank %}
+                        <p>{{ section.settings.Regular_subscription_bundle }}</p>
+                      {% endif -%}
+                    </div>
+                    <!-- subscription + non-combo -->
+                    <div class="varient-description Super hide" data-id="2">
+                      {% if section.settings.Super_subscription_bundle != blank %}
+                        <p>{{ section.settings.Super_subscription_bundle }}</p>
+                      {% endif -%}
+                    </div>
+
+                    <!-- subscription + combo: -->
+                    <div class="varient-description Combo " data-id="3">
+                      {% if section.settings.Combo_subscription_bundle != blank %}
+                        <p>{{ section.settings.Combo_subscription_bundle }}</p>
+                      {% endif -%}
+                    </div>
+                  </div>
+
+                  <div class="description-wrapper bm-description-wrapper otp ">
+                    <!-- otp + non-combo -->
+                    <div class="varient-description Light" data-id="0">
+                      {% if section.settings.Light_subscription_bundle_otp != blank %}
+                        <p>{{ section.settings.Light_subscription_bundle_otp }}</p>
+                      {% endif -%}
+                    </div>
+                    <div class="varient-description Regular" data-id="1">
+                      {% if section.settings.Regular_subscription_bundle_otp != blank %}
+                        <p>{{ section.settings.Regular_subscription_bundle_otp }}</p>
+                      {% endif -%}
+                    </div>
+                    <div class="varient-description Super" data-id="2">
+                      {% if section.settings.Super_subscription_bundle_otp != blank %}
+                        <p>{{ section.settings.Super_subscription_bundle_otp }}</p>
+                      {% endif -%}
+                    </div>
+                  </div>
+                {% endif %}
+
+                {% if product == all_products['marlow-tampons'] %}
+                  <div class="description-wrapper bm-description-wrapper sub">
+                    <!-- subscription + non-combo -->
+                    <div class="varient-description  Light hide" data-id="0">
+                      <p>{{ section.settings.Light_subscription_tampons }}</p>
+                    </div>
+                    <!-- subscription + non-combo -->
+                    <div class="varient-description Regular hide" data-id="1">
+                      <p>{{ section.settings.Regular_subscription_tampons }}</p>
+                    </div>
+                    <!-- subscription + non-combo -->
+                    <div class="varient-description Super hide" data-id="2">
+                      <p>{{ section.settings.Super_subscription_tampons }}</p>
+                    </div>
+
+                    <!-- subscription + combo: -->
+                    <div class="varient-description Combo " data-id="3">
+                      <p>{{ section.settings.Combo_subscription_tampons }}</p>
+                    </div>
+                  </div>
+
+                  <div class="description-wrapper bm-description-wrapper otp ">
+                    <!-- otp + non-combo -->
+                    <div class="varient-description Light" data-id="0">
+                      {% if section.settings.Light_subscription_tampons_otp != blank %}
+                        <p>{{ section.settings.Light_subscription_tampons_otp }}</p>
+                      {% endif -%}
+                    </div>
+                    <div class="varient-description Regular" data-id="1">
+                      <p>{{ section.settings.Regular_subscription_tampons_otp }}</p>
+                    </div>
+                    <div class="varient-description Super" data-id="2">
+                      <p>{{ section.settings.Super_subscription_tampons_otp }}</p>
+                    </div>
+                  </div>
+                {% endif %}
+
+                {% if product == all_products['bundle-save'] or product == all_products['marlow-tampons'] %}
+                  <div
+                    class="data-smartrr-top-price"
+                    data-smartrr-product-id="{{ product.id }}"
+                    data-smartrr-price-style="original-compare"
+                    class="data-smartrr-top-price"
+                  >
+                    <span data-smartrr-subscribe-price></span>
+                    <span data-smartrr-compare-price></span>
+                    <span data-smartrr-regular-price></span>
+                  </div>
+                {% endif %}
+
+         
 
             {%- when 'buy_buttons' -%}
               {% if product.available %}
@@ -365,6 +526,7 @@
                   {% else %}
                     <input type="hidden" name="quantity" value="1"/>
                   {% endif %}
+                
 
                   <span class="payment-and-quantity__add">
                           <button type="submit" name="add"
@@ -373,6 +535,8 @@
                             <span class="loading-spinner" aria-label="{{ 'products.product.adding_to_cart' | t }}"></span>
                           </button>
                         </span>
+
+          
 
                   {% if block.settings.enable_payment_button and product.selling_plan_groups == empty %}
                     {{ form | payment_button }}
@@ -567,456 +731,591 @@
 <!--End Stamped.io Auto Installation-->
 
 {% schema %}
-  {
-    "name": "Product pages",
-    "class": "section-product-template",
-    "blocks": [
-      {
-         "type": "@app"
-      },
-      {
-        "type": "title",
-        "name": "Title",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "checkbox",
-            "id": "heading_h1",
-            "label": "Set as the primary page heading",
-            "info": "Uses <h1> tag. One per page recommended. [Learn more](https://cleancanvas.co.uk/support/canopy/seo)",
-            "default": true
-          }
-        ]
-      },
-      {
-        "type": "weight",
-        "name": "Weight",
-        "limit": 1
-      },
-      {
-        "type": "price",
-        "name": "Price",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "checkbox",
-            "id": "show_tax_and_shipping",
-            "label": "Show tax status and shipping policy link",
-            "default": false
-          }
-        ]
-      },
-      {
-        "type": "vendor_and_type",
-        "name": "Vendor/type",
-        "settings": [
-          {
-            "type": "checkbox",
-            "id": "prod_show_brand",
-            "label": "Show vendor",
-            "default": true
-          },
-          {
-            "type": "checkbox",
-            "id": "prod_show_type",
-            "label": "Show product type",
-            "default": true
-          }
-        ]
-      },
-      {
-        "type": "sku",
-        "name": "SKU",
-        "limit": 1
-      },
-      {
-        "type": "rating",
-        "name": "Product rating",
-        "limit": 1
-      },
-      {
-        "type": "description",
-        "name": "Description",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "checkbox",
-            "id": "show_in_quickbuy",
-            "label": "Show in quick buy",
-            "default": false
-          },
-          {
-            "type": "select",
-            "id": "display",
-            "default": "standard",
-            "label": "Display style",
-            "options": [
-              {
-                "value": "standard",
-                "label": "Standard"
-              },
-              {
-                "value": "tab_open",
-                "label": "Open tab"
-              },
-              {
-                "value": "tab_closed",
-                "label": "Closed tab"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "type": "variant_picker",
-        "name": "Variant picker",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "text",
-            "id": "prod_clicky_opt_names",
-            "label": "Options to show as boxes",
-            "info": "Separate with commas, no spaces. E.g. Size,Color"
-          },
-          {
-            "type": "checkbox",
-            "id": "stock_warning_show",
-            "label": "Show inventory notice",
-            "default": false
-          },
-          {
-            "type": "range",
-            "id": "stock_warning_limit",
-            "min": 0,
-            "max": 100,
-            "step": 1,
-            "label": "Low inventory limit",
-            "default": 5,
-            "info": "Show inventory quantities below this threshold. Choose 0 to always show the quantity in stock."
-          },
-          {
-            "type": "header",
-            "content": "Size chart"
-          },
-          {
-            "type": "checkbox",
-            "id": "show_size_chart",
-            "label": "Enable",
-            "default": false
-          },
-          {
-            "type": "text",
-            "id": "size_chart_variant",
-            "label": "Option name",
-            "default": "Size",
-            "info": "Enter the name of the option which changes the size of the product. For example, 'Size' or 'Length'. [Learn more](https://cleancanvas.co.uk/support/general/size-chart)"
-          },
-          {
-            "type": "page",
-            "id": "size_chart_page",
-            "label": "Page containing size chart"
-          }
-        ]
-      },
-      {
-        "type": "buy_buttons",
-        "name": "Buy buttons/quantity",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "checkbox",
-            "id": "enable_payment_button",
-            "label": "Show dynamic checkout button",
-            "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
-            "default": true
-          },
-          {
-            "type": "checkbox",
-            "id": "show_pickup_availability",
-            "label": "Show pickup availability",
-            "default": true,
-            "info": "Show customers where they can pick up the product. [Learn more](https://help.shopify.com/en/manual/shipping/setting-up-and-managing-your-shipping/local-methods/local-pickup)"
-          },
-          {
-            "type": "checkbox",
-            "id": "show_backorder_text",
-            "label": "Show backorder text",
-            "default": true,
-            "info": "Only shows for products which use Shopify inventory tracking and are available to purchase when out of stock."
-          }
-        ]
-      },
-      {
-        "type": "social",
-        "name": "Social sharing links",
-        "limit": 1
-      },
-      {
-        "type": "text",
-        "name": "Text",
-        "settings": [
-          {
-            "type": "richtext",
-            "id": "text",
-            "label": "Text"
-          },
-          {
-            "type": "checkbox",
-            "id": "show_in_quickbuy",
-            "label": "Show in quick buy",
-            "default": false
-          }
-        ]
-      },
-      {
-        "type": "link",
-        "name": "Link",
-        "settings": [
-          {
-            "type": "text",
-            "id": "text",
-            "default": "Link",
-            "label": "Text"
-          },
-          {
-            "type": "url",
-            "id": "url",
-            "label": "Url"
-          },
-          {
-            "type": "select",
-            "id": "text_style",
-            "default": "link",
-            "label": "Style",
-            "options": [
-              {
-                "value": "link",
-                "label": "Link"
-              },
-              {
-                "value": "button_primary",
-                "label": "Primary button"
-              },
-              {
-                "value": "button_secondary",
-                "label": "Secondary button"
-              }
-            ]
-          },
-          {
-            "type": "checkbox",
-            "id": "open_new_window",
-            "label": "Open in a new window",
-            "default": false
-          },
-          {
-            "type": "checkbox",
-            "id": "show_in_quickbuy",
-            "label": "Show in quick buy",
-            "default": false
-          }
-        ]
-      },
-      {
-        "type": "image",
-        "name": "Image",
-        "settings": [
-          {
-            "type": "image_picker",
-            "id": "image",
-            "label": "Image"
-          },
-          {
-            "type": "range",
-            "id": "image_width",
-            "min": 60,
-            "max": 700,
-            "step": 10,
-            "unit": "px",
-            "label": "Image width",
-            "default": 700
-          },
-          {
-            "type": "url",
-            "id": "url",
-            "label": "Link"
-          },
-          {
-            "type": "checkbox",
-            "id": "show_in_quickbuy",
-            "label": "Show in quick buy",
-            "default": false
-          }
-        ]
-      },
-      {
-        "type": "custom_liquid",
-        "name": "Custom Liquid",
-        "settings": [
-          {
-            "type": "liquid",
-            "id": "custom_liquid",
-            "label": "Custom Liquid"
-          },
-          {
-            "type": "checkbox",
-            "id": "show_in_quickbuy",
-            "label": "Show in quick buy",
-            "default": false
-          }
-        ]
-      },
-      {
-        "type": "accordion",
-        "name": "Collapsible tab",
-        "settings": [
-          {
-            "type": "text",
-            "id": "title",
-            "label": "Heading",
-            "default": "Collapsible tab"
-          },
-          {
-            "type": "richtext",
-            "id": "content",
-            "label": "Tab content",
-            "default": "<p>Collapsible tab content</p>"
-          },
-          {
-            "type": "page",
-            "id": "page",
-            "label": "Tab content from page"
-          },
-          {
-            "type": "checkbox",
-            "id": "open",
-            "label": "Open",
-            "default": false
-          },
-          {
-            "type": "checkbox",
-            "id": "show_in_quickbuy",
-            "label": "Show in quick buy",
-            "default": false
-          }
-        ]
-      },
-      {
-        "type": "divider",
-        "name": "Divider",
-        "settings": [
-          {
-            "type": "checkbox",
-            "id": "show_line",
-            "label": "Show line",
-            "default": true,
-            "info": "Turn this off to making this just a spacing element"
-          },
-          {
-            "type": "select",
-            "id": "spacing_above",
-            "default": "small",
-            "label": "Spacing above",
-            "options": [
-              {
-                "value": "small",
-                "label": "Small"
-              },
-              {
-                "value": "medium",
-                "label": "Medium"
-              },
-              {
-                "value": "large",
-                "label": "Large"
-              }
-            ]
-          },
-          {
-            "type": "select",
-            "id": "spacing_below",
-            "default": "small",
-            "label": "Spacing below",
-            "options": [
-              {
-                "value": "small",
-                "label": "Small"
-              },
-              {
-                "value": "medium",
-                "label": "Medium"
-              },
-              {
-                "value": "large",
-                "label": "Large"
-              }
-            ]
-          },
-          {
-            "type": "checkbox",
-            "id": "show_in_quickbuy",
-            "label": "Show in quick buy",
-            "default": false
-          }
-        ]
-      }
-    ],
-    "settings": [
-      {
-        "type": "select",
-        "id": "page_width",
-        "default": "medium",
-        "label": "Page width",
-        "options": [
-          {
-            "value": "narrow",
-            "label": "Narrow"
-          },
-          {
-            "value": "medium",
-            "label": "Medium"
-          },
-          {
-            "value": "wide",
-            "label": "Wide"
-          }
-        ]
-      },
-      {
-        "type": "checkbox",
-        "id": "description_below",
-        "label": "Show product description below images/product form",
-        "default": false
-      },
-      {
-        "type": "checkbox",
-        "id": "show_reviews",
-        "label": "Show product reviews below product images/information",
-        "info": "Requires the free [Shopify Product Reviews](https://apps.shopify.com/product-reviews?ref=cleancanvas) app.",
-        "default": true
-      },
-      {
-        "type": "header",
-        "content": "Media"
-      },
-      {
-        "type": "paragraph",
-        "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media)"
-      },
-      {
-        "type": "checkbox",
-        "id": "enable_video_looping",
-        "label": {
-          "en": "Enable video looping"
+{
+  "name": "Product pages",
+  "class": "section-product-template",
+  "blocks": [
+    {
+       "type": "@app"
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "heading_h1",
+          "label": "Set as the primary page heading",
+          "info": "Uses <h1> tag. One per page recommended. [Learn more](https://cleancanvas.co.uk/support/canopy/seo)",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "weight",
+      "name": "Weight",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_tax_and_shipping",
+          "label": "Show tax status and shipping policy link",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "vendor_and_type",
+      "name": "Vendor/type",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "prod_show_brand",
+          "label": "Show vendor",
+          "default": true
         },
-        "default": false
+        {
+          "type": "checkbox",
+          "id": "prod_show_type",
+          "label": "Show product type",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "sku",
+      "name": "SKU",
+      "limit": 1
+    },
+    {
+      "type": "rating",
+      "name": "Product rating",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_in_quickbuy",
+          "label": "Show in quick buy",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "display",
+          "default": "standard",
+          "label": "Display style",
+          "options": [
+            {
+              "value": "standard",
+              "label": "Standard"
+            },
+            {
+              "value": "tab_open",
+              "label": "Open tab"
+            },
+            {
+              "value": "tab_closed",
+              "label": "Closed tab"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "variant_picker",
+      "name": "Variant picker",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "prod_clicky_opt_names",
+          "label": "Options to show as boxes",
+          "info": "Separate with commas, no spaces. E.g. Size,Color"
+        },
+        {
+          "type": "checkbox",
+          "id": "stock_warning_show",
+          "label": "Show inventory notice",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "stock_warning_limit",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "label": "Low inventory limit",
+          "default": 5,
+          "info": "Show inventory quantities below this threshold. Choose 0 to always show the quantity in stock."
+        },
+        {
+          "type": "header",
+          "content": "Size chart"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_size_chart",
+          "label": "Enable",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "size_chart_variant",
+          "label": "Option name",
+          "default": "Size",
+          "info": "Enter the name of the option which changes the size of the product. For example, 'Size' or 'Length'. [Learn more](https://cleancanvas.co.uk/support/general/size-chart)"
+        },
+        {
+          "type": "page",
+          "id": "size_chart_page",
+          "label": "Page containing size chart"
+        }
+      ]
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons/quantity",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_payment_button",
+          "label": "Show dynamic checkout button",
+          "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_pickup_availability",
+          "label": "Show pickup availability",
+          "default": true,
+          "info": "Show customers where they can pick up the product. [Learn more](https://help.shopify.com/en/manual/shipping/setting-up-and-managing-your-shipping/local-methods/local-pickup)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_backorder_text",
+          "label": "Show backorder text",
+          "default": true,
+          "info": "Only shows for products which use Shopify inventory tracking and are available to purchase when out of stock."
+        }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "Social sharing links",
+      "limit": 1
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_in_quickbuy",
+          "label": "Show in quick buy",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Link",
+          "label": "Text"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url"
+        },
+        {
+          "type": "select",
+          "id": "text_style",
+          "default": "link",
+          "label": "Style",
+          "options": [
+            {
+              "value": "link",
+              "label": "Link"
+            },
+            {
+              "value": "button_primary",
+              "label": "Primary button"
+            },
+            {
+              "value": "button_secondary",
+              "label": "Secondary button"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_window",
+          "label": "Open in a new window",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_in_quickbuy",
+          "label": "Show in quick buy",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "image_width",
+          "min": 60,
+          "max": 700,
+          "step": 10,
+          "unit": "px",
+          "label": "Image width",
+          "default": 700
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_in_quickbuy",
+          "label": "Show in quick buy",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "custom_liquid",
+      "name": "Custom Liquid",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Custom Liquid"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_in_quickbuy",
+          "label": "Show in quick buy",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Collapsible tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Collapsible tab"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Tab content",
+          "default": "<p>Collapsible tab content</p>"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Tab content from page"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Open",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_in_quickbuy",
+          "label": "Show in quick buy",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "Divider",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_line",
+          "label": "Show line",
+          "default": true,
+          "info": "Turn this off to making this just a spacing element"
+        },
+        {
+          "type": "select",
+          "id": "spacing_above",
+          "default": "small",
+          "label": "Spacing above",
+          "options": [
+            {
+              "value": "small",
+              "label": "Small"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "spacing_below",
+          "default": "small",
+          "label": "Spacing below",
+          "options": [
+            {
+              "value": "small",
+              "label": "Small"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "show_in_quickbuy",
+          "label": "Show in quick buy",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "page_width",
+      "default": "medium",
+      "label": "Page width",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "Narrow"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "description_below",
+      "label": "Show product description below images/product form",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show product reviews below product images/information",
+      "info": "Requires the free [Shopify Product Reviews](https://apps.shopify.com/product-reviews?ref=cleancanvas) app.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "paragraph",
+      "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_video_looping",
+      "label": {
+        "en": "Enable video looping"
       },
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_product_image_zoom",
+      "label": "Enable hover zoom",
+      "default": true
+    },
+     {
+      "type": "text",
+      "id": "choose_link",
+      "label": "Choose link",
+      "default": "How do I choose?"
+    },
+     {
+      "type": "image_picker",
+      "id": "Light",
+      "label": "Light Varient"
+    },
+     {
+      "type": "image_picker",
+      "id": "Light_active",
+      "label": "Light active Varient"
+    },
+     {
+      "type": "image_picker",
+      "id": "Regular",
+      "label": "Regular Varient"
+    },
+     {
+      "type": "image_picker",
+      "id": "Regular_active",
+      "label": "Regular active Varient"
+    },
+     {
+      "type": "image_picker",
+      "id": "Super",
+      "label": "Super Varient"
+    },
       {
-        "type": "checkbox",
-        "id": "enable_product_image_zoom",
-        "label": "Enable hover zoom",
-        "default": true
-      }
-    ]
-  }
+      "type": "image_picker",
+      "id": "Super_active",
+      "label": "Super active Varient"
+    },
+     {
+      "type": "image_picker",
+      "id": "Combo",
+      "label": "Combo Varient"
+    },
+     {
+      "type": "image_picker",
+      "id": "Combo_active",
+      "label": "Combo active Varient"
+    },
+     {
+      "type": "text",
+      "id": "Light_subscription_bundle",
+      "label": " subscription + Light bundle",
+      "default": "Select light "
+    },
+     {
+      "type": "text",
+      "id": "Regular_subscription_bundle",
+      "label": "subscription + Regular bundle",
+      "default": "Select Regular "
+    },
+     {
+      "type": "text",
+      "id": "Super_subscription_bundle",
+      "label": "subscription + Super bundle",
+      "default": "Select Super "
+    },
+     {
+      "type": "text",
+      "id": "Combo_subscription_bundle",
+      "label": "subscription + Combo bundle",
+      "default": "Select Combo "
+    },
+      {
+      "type": "text",
+      "id": "Light_subscription_bundle_otp",
+      "label": "buy once + Light bundle otp ",
+      "default": "Select light "
+    },
+     {
+      "type": "text",
+      "id": "Regular_subscription_bundle_otp",
+      "label": "buy once + Regular bundle otp",
+      "default": "Select Regular "
+    },
+     {
+      "type": "text",
+      "id": "Super_subscription_bundle_otp",
+      "label": "buy once + Super bundle otp",
+      "default": "Select Super "
+    },
+     {
+      "type": "text",
+      "id": "Light_subscription_tampons",
+      "label": "Light subscription tampons",
+      "default": "Select light "
+    },
+     {
+      "type": "text",
+      "id": "Regular_subscription_tampons",
+      "label": "Regular subscription tampons",
+      "default": "Select Regular "
+    },
+     {
+      "type": "text",
+      "id": "Super_subscription_tampons",
+      "label": "Super subscription tampons",
+      "default": "Select Super "
+    },
+     {
+      "type": "text",
+      "id": "Combo_subscription_tampons",
+      "label": "Combo subscription tampons",
+      "default": "Select Combo "
+    },
+     {
+      "type": "text",
+      "id": "Light_subscription_tampons_otp",
+      "label": "Light tampons otp",
+      "default": "Select light "
+    },
+     {
+      "type": "text",
+      "id": "Regular_subscription_tampons_otp",
+      "label": "Regular  tampons otp",
+      "default": "Select Regular "
+    },
+     {
+      "type": "text",
+      "id": "Super_subscription_tampons_otp",
+      "label": "Super  tampons otp",
+      "default": "Select Super "
+    }
+
+
+  ]
+}
 {% endschema %}
+
+
+                {{ 'marlon-tempo.js' | asset_url | script_tag }}
