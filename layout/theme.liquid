@@ -143,22 +143,14 @@
 
   {% render "loyaltylion" %}
 
-</head>
+{% include 'sca.storelocator' %}
 
-{% comment %} add css for transparent header - am {% endcomment %}
-{%- assign homepage_divider_col_opacity = settings.homepage_divider_col | color_extract: 'alpha' -%}
-<body id="body" class="template-{{ template.name }} {% if template.suffix != blank %}template-sfx-{{ template.suffix }}{% endif %} {% if template.directory != blank %}template-dir-{{ template.directory }}{% endif %}
-      {% if settings.transparent_header %} transparent-header {% endif %}"
-      data-cc-animate-timeout="80"
-      data-template="{{ template.name }}">
-
-{% if content_for_header contains 'convert_global' %}
 <script type="text/javascript">
  var _conv_page_type = "{{ request.page_type }}";
  var _conv_category_id = "{{ collection.id }}";
  var _conv_category_name = "{{ collection.title }}";
  var _conv_product_sku = "{{ product.selected_or_first_available_variant.sku }}";
- var _conv_product_name = "{{ product.title }}";
+ var _conv_product_name = '{{ product.title }}';
  var _conv_product_price = "{{ product.price_min | money_without_currency }}";
  var _conv_customer_id = "{{ customer.id }}";
  var _conv_custom_v1 = "{{ product.tags.first }}";
@@ -167,7 +159,15 @@
  var _conv_custom_v4 = "{{ cart.total_price | money_without_currency }}";
 </script>
 {% render 'convert' %}
-{% endif %}
+
+</head>
+
+{% comment %} add css for transparent header - am {% endcomment %}
+{%- assign homepage_divider_col_opacity = settings.homepage_divider_col | color_extract: 'alpha' -%}
+<body id="body" class="template-{{ template.name }} {% if template.suffix != blank %}template-sfx-{{ template.suffix }}{% endif %} {% if template.directory != blank %}template-dir-{{ template.directory }}{% endif %}
+      {% if settings.transparent_header %} transparent-header {% endif %}"
+      data-cc-animate-timeout="80"
+      data-template="{{ template.name }}">
 
 {% if settings.animations_enabled_desktop %}
   <script>
