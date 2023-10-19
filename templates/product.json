@@ -49,6 +49,11 @@
             "product": "{{product}}"
           }
         },
+        "8ce22192-fdcc-42a8-a7f5-b521fe8d4464": {
+          "type": "shopify:\/\/apps\/smarttabs-product-tabs\/blocks\/app-embed\/e4a7401b-931e-422d-bab8-fc6ef5da44a4",
+          "settings": {
+          }
+        },
         "175fd61d-5d55-44f0-8204-9e7f6a32037c": {
           "type": "text",
           "settings": {
@@ -59,12 +64,13 @@
         "51f1b408-2cd1-4e79-ae2e-040d579f55f2": {
           "type": "text",
           "settings": {
-            "text": "<p>Experience the world's smoothest tampon. <br\/><em>Plus, save 10% for bundling while you're at it!<\/em><\/p>",
+            "text": "<p>{{ product.metafields.descriptors.care_guide | metafield_tag }}<\/p>",
             "show_in_quickbuy": true
           }
         },
         "8fe97ede-6cf7-4d10-a0e4-7b169ab466b5": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "<p><\/p><p><strong>Our bundle is for anyone who...<\/strong><\/p><ul><li>Is on those first and last days of their period<\/li><li>Has a light flow<\/li><li>Is new to using tampons<\/li><li>Finds tampons uncomfortable to insert<\/li><li>Experiences vaginal dryness<\/li><li>Experiences extra friction when inserting a tampon (such as due to vaginismus or endometriosis)<\/li><\/ul><p>... and just wants a super smooth and easy tampon experience!<\/p>",
             "show_in_quickbuy": false
@@ -118,11 +124,6 @@
             "initialize_tabs": "immediate",
             "custom_scripts": ""
           }
-        },
-        "8ce22192-fdcc-42a8-a7f5-b521fe8d4464": {
-          "type": "shopify:\/\/apps\/smarttabs-product-tabs\/blocks\/app-embed\/e4a7401b-931e-422d-bab8-fc6ef5da44a4",
-          "settings": {
-          }
         }
       },
       "block_order": [
@@ -130,6 +131,7 @@
         "title",
         "price",
         "0ea248e2-b0d1-4651-a9be-a948ffc10564",
+        "8ce22192-fdcc-42a8-a7f5-b521fe8d4464",
         "175fd61d-5d55-44f0-8204-9e7f6a32037c",
         "51f1b408-2cd1-4e79-ae2e-040d579f55f2",
         "8fe97ede-6cf7-4d10-a0e4-7b169ab466b5",
@@ -137,8 +139,7 @@
         "rating",
         "variant_picker",
         "buy_buttons",
-        "0166dd9e-3c0c-4673-a572-ee2236d351e9",
-        "8ce22192-fdcc-42a8-a7f5-b521fe8d4464"
+        "0166dd9e-3c0c-4673-a572-ee2236d351e9"
       ],
       "custom_css": [
 
