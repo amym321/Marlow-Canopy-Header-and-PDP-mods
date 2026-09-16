@@ -12069,12 +12069,12 @@ body.tab-used .cc-checkbox__input:focus + .cc-checkbox__label, html.no-js .cc-ch
 
 .not-scrolled .toolbar-container,
 .not-scrolled .main-nav .nav-item .nav-item-link {
-  color: {{nav_tran_desk_col}} !important;   /* color: {{#fff}} !important; */
+  color: {{nav_tran_desk_col}} !important;   /* color: {{ fff }} !important; */
 }
 @media (max-width: 768px) {
   .not-scrolled .toolbar-container,
   .not-scrolled .main-nav .nav-item .nav-item-link {
-    color: {{nav_tran_mobile_col}} !important;   /* color: {{#fff}} !important; */
+    color: {{nav_tran_mobile_col}} !important;   /* color: {{ fff }} !important; */
   }
 }
 .not-scrolled:hover .toolbar-container,
@@ -12173,3 +12173,16 @@ body.tab-used .cc-checkbox__input:focus + .cc-checkbox__label, html.no-js .cc-ch
 .product-details .product-title {
   font-weight: 700;
 }
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{#fff}}"
+  to: "{{ fff }}"
+  position: 312564..312573
+- from: "{{#fff}}"
+  to: "{{ fff }}"
+  position: 312767..312776
+{% endcomment %}
